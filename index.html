@@ -31,11 +31,25 @@
   .container { width: 100%; max-width: 560px; }
 
   .eyebrow {
-    font-size: 11px; font-weight: 500; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--accent);
-    display: block; margin-bottom: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 0.08em;
+    color: var(--text);
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 6px;
   }
-  h1 {
+  .eyebrow .heart {
+    color: var(--accent);
+    font-size: 22px;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+  .eyebrow .name { color: var(--accent); }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.25); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.18); }
+    56% { transform: scale(1); }
+  }  h1 {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 60px; line-height: 0.88;
     margin-bottom: 10px;
@@ -151,13 +165,44 @@
     50% { width: 60%; margin-left: 20%; }
     100% { width: 0%; margin-left: 100%; }
   }
+
+  .worm-wrap {
+    position: fixed;
+    bottom: 0;
+    right: -260px;
+    width: 260px;
+    animation: worm-emerge 2s cubic-bezier(0.22, 1, 0.36, 1) 1s forwards;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes worm-emerge {
+    0%   { right: -260px; }
+    100% { right: -30px; }
+  }
+  @keyframes worm-blink {
+    0%, 90%, 100% { transform: scaleY(1); }
+    95% { transform: scaleY(0.05); }
+  }
+  @keyframes worm-bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .worm-head-group {
+    animation: worm-bob 2.4s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+  .worm-eye {
+    animation: worm-blink 3.5s ease-in-out infinite;
+    transform-origin: center center;
+  }
+  .worm-wrap svg { display: block; }
 </style>
 </head>
 <body>
 <div class="container">
-  <span class="eyebrow">Mnstrworm × Mnstrbait</span>
+  <div class="eyebrow"><span class="heart">&#9829;</span><span>Mnstrworm <span class="name">&times;</span> Mnstrbait</span><span class="heart">&#9829;</span></div>
   <h1>WATCH<br><span class="x">ROULETTE</span></h1>
-  <p class="subtitle">Too many options. Let the wheel decide.</p>
+  <p class="subtitle">Too many options? Pull one out of the Mnstrworm's pockets.</p>
 
   <div id="loading-bar" class="loading-bar"><div class="loading-bar-inner"></div></div>
 
@@ -369,5 +414,60 @@ async function loadSheet() {
 document.getElementById('spin-btn').addEventListener('click', spin);
 loadSheet();
 </script>
+
+<!-- MNSTRWORM (cute version) -->
+<div class="worm-wrap">
+  <svg viewBox="0 0 260 360" xmlns="http://www.w3.org/2000/svg" width="260" height="360">
+    <!-- body segments -->
+    <ellipse cx="230" cy="355" rx="65" ry="42" fill="#a8e063"/>
+    <ellipse cx="200" cy="320" rx="62" ry="40" fill="#b5e878"/>
+    <ellipse cx="172" cy="287" rx="60" ry="38" fill="#b5e878"/>
+    <ellipse cx="148" cy="255" rx="57" ry="36" fill="#c2ed8a"/>
+    <!-- segment lines -->
+    <path d="M170 308 Q210 296 238 308" stroke="#8bc34a" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M143 275 Q183 262 215 273" stroke="#8bc34a" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M118 244 Q156 231 190 243" stroke="#8bc34a" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <!-- neck -->
+    <ellipse cx="128" cy="222" rx="54" ry="35" fill="#c8ef96"/>
+    <!-- head -->
+    <g class="worm-head-group">
+      <ellipse cx="108" cy="178" rx="72" ry="75" fill="#d4f4a0"/>
+      <!-- cheek blushes -->
+      <ellipse cx="72" cy="195" rx="16" ry="10" fill="#ffb3c1" opacity="0.5"/>
+      <ellipse cx="148" cy="190" rx="14" ry="9" fill="#ffb3c1" opacity="0.45"/>
+      <!-- left eye -->
+      <g class="worm-eye" style="transform-origin: 82px 168px;">
+        <ellipse cx="82" cy="168" rx="18" ry="20" fill="white"/>
+        <ellipse cx="85" cy="171" rx="10" ry="11" fill="#222"/>
+        <ellipse cx="89" cy="166" rx="4" ry="4" fill="white"/>
+      </g>
+      <!-- right eye -->
+      <g class="worm-eye" style="transform-origin: 134px 162px;">
+        <ellipse cx="134" cy="162" rx="16" ry="18" fill="white"/>
+        <ellipse cx="137" cy="165" rx="9" ry="10" fill="#222"/>
+        <ellipse cx="141" cy="160" rx="3.5" ry="3.5" fill="white"/>
+      </g>
+      <!-- little antenna -->
+      <path d="M100 108 Q94 88 84 76" stroke="#8bc34a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="84" cy="74" r="7" fill="#ff6b9d"/>
+      <path d="M118 105 Q122 84 130 73" stroke="#8bc34a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <circle cx="130" cy="71" r="6" fill="#ff6b9d"/>
+      <!-- smile -->
+      <path d="M78 196 Q108 218 140 196" stroke="#5a8a1a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- tiny tongue -->
+      <ellipse cx="108" cy="210" rx="8" ry="5" fill="#ff8fab"/>
+    </g>
+    <!-- dirt ground -->
+    <rect x="0" y="342" width="260" height="20" fill="#2a1a0a" rx="4"/>
+    <ellipse cx="50" cy="342" rx="50" ry="10" fill="#2a1a0a"/>
+    <ellipse cx="160" cy="345" rx="70" ry="9" fill="#2a1a0a"/>
+    <ellipse cx="240" cy="343" rx="35" ry="8" fill="#2a1a0a"/>
+    <!-- little dirt specks -->
+    <circle cx="30" cy="336" r="3" fill="#3a2a10" opacity="0.7"/>
+    <circle cx="80" cy="333" r="2" fill="#3a2a10" opacity="0.6"/>
+    <circle cx="55" cy="330" r="2.5" fill="#3a2a10" opacity="0.5"/>
+  </svg>
+</div>
+
 </body>
 </html>
