@@ -255,10 +255,11 @@ function parseCSV(text) {
     const cols = splitLine(lines[i]);
     const title = clean(cols[1]);
     if (!title) continue;
+    const watched = clean(cols[0]).toUpperCase() === 'TRUE';
     const link  = clean(cols[2]);
     const genre = clean(cols[5]);
     const type  = clean(cols[6]);
-    results.push({ title, link, genre, type });
+    results.push({ title, link, genre, type, watched });
   }
   return results;
 }
@@ -285,6 +286,7 @@ function isURL(s) {
 
 function getPool() {
   return allTitles.filter(t => {
+    if (t.watched) return false;
     if (typeFilter !== 'all' && t.type !== typeFilter) return false;
     if (genreFilter !== 'all' && !t.genre.toLowerCase().includes(genreFilter.toLowerCase())) return false;
     return true;
