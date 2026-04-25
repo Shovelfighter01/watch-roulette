@@ -246,16 +246,13 @@ let spinning = false;
 function parseCSV(text) {
   const lines = text.trim().split('\n');
   const results = [];
-  // Find header row — look for row containing "Title"
-  let dataStart = 2;
-  for (let i = 0; i < Math.min(5, lines.length); i++) {
-    if (lines[i].toLowerCase().includes('title')) { dataStart = i + 1; break; }
-  }
-  for (let i = dataStart; i < lines.length; i++) {
+  for (let i = 0; i < lines.length; i++) {
     const cols = splitLine(lines[i]);
+    const first = clean(cols[0]).toUpperCase();
+    if (first !== 'TRUE' && first !== 'FALSE') continue;
+    const watched = first === 'TRUE';
     const title = clean(cols[1]);
     if (!title) continue;
-    const watched = clean(cols[0]).toUpperCase() === 'TRUE';
     const link  = clean(cols[2]);
     const genre = clean(cols[5]);
     const type  = clean(cols[6]);
